@@ -1,7 +1,16 @@
-import json, requests, pyperclip, os
-url = 'https://charasheet.vampire-blood.net/m480061f3dfcc3efbf1ef1dee1e416b76'
-res = requests.get(url+'.json')
-data = json.loads(res.content)
-with open('out.json','w',encoding='utf8')as w:
-    json.dump(data,w,indent=4)
-print(data)
+import json, requests, pyperclip, os, time
+from bs4 import BeautifulSoup
+
+chdata = []
+res = requests.get('https://charasheet.vampire-blood.net/list_nechro.html?name=ゴライアス&order=&page=2')
+soup = BeautifulSoup(res.content, 'html.parser')
+links = soup.find_all('a')
+for link in links:
+    if '.txt' in link.get('href'):
+        chdata.append(str(link.get('href')).replace('.txt','.json'))
+for i in chdata:
+    res = requests.get(i).content
+    data = json.loads(res)
+
+    print(data)
+    time.sleep(1)
