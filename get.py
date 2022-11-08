@@ -2,7 +2,7 @@ import json, requests, pyperclip, os, time
 from bs4 import BeautifulSoup
 url = 'https://charasheet.vampire-blood.net/list_nechro.html?order=&page='
 chdata = []
-
+　
 for i in range(201):
     res = requests.get(url + f'{i}')
     soup = BeautifulSoup(res.content, 'html.parser')
